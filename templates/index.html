@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+{% block title %}Accueil — Veille{% endblock %}
+
+{% block content %}
+  <div class="card">
+    <form id="fetchForm" method="post" action="{{ url_for('fetch_action') }}" class="inline">
+      <input type="text" name="custom_feed" placeholder="Ajouter flux RSS (optionnel ex: https://example.com/feed)" />
+      <button class="btn" type="submit">Lancer la collecte</button>
+      <a class="btn ghost" href="{{ url_for('advanced_search_page') }}">Recherche avancée / Export CSV</a>
+    </form>
+  </div>
+
+  <section class="card">
+    <h2 style="margin-top:0">Dernières mentions pertinentes</h2>
+    <p style="color:var(--muted); margin:6px 0 12px">Articles & messages contenant les mots-clés de veille (anonymous, op, hacktivism...).</p>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Source</th><th>Titre / extrait</th><th>Catégorie</th><th>Confiance</th><th></th>
+        </tr>
+      </thead>
+      <tbody>
+        {% if articles %}
+          {% for r in articles %}
+          <tr>
+            <td style="width:160px">
+              <div style="font-weight:700">{{ r[2] }}</div>
+              <div style="color:var(--muted);font-size:12px">{{ r[4] if r[4] else '' }}</div>
+            </td>
+            <td>
+              <div style="font-weight:600">{{ r[1] or '—' }}</div>
+              <div style="color:var(--muted); margin-top:6px; max-height:44px; overflow:hidden; text-overflow:ellipsis;">
+                {{ r[4] or '' }}
+              </div>
+            </td>
+            <td>
+              <span class="pill blue">{{ r[5] or 'other' }}</span>
+            </td>
+            <td><span class="score">{{ '%.2f'|format(r[6] or 0) }}</span></td>
+            <td><a class="btn" href="{{ url_for('article_view', aid=r[0]) }}">Voir</a></td>
+          </tr>
+          {% endfor %}
+        {% else %}
+          <tr><td colspan="5" style="color:var(--muted);padding:18px">Aucune mention pour l'instant — lance la collecte.</td></tr>
+        {% endif %}
+      </tbody>
+    </table>
+  </section>
+{% endblock %}

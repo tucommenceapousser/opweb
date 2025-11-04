@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block title %}Article — Veille{% endblock %}
+
+{% block content %}
+  <div class="card" style="display:flex;justify-content:space-between;align-items:center;">
+    <div>
+      <h2 style="margin:0">{{ a.title }}</h2>
+      <div style="color:var(--muted);margin-top:6px">Source: <strong>{{ a.source }}</strong> • Publié: <strong>{{ a.published_at }}</strong></div>
+    </div>
+    <div style="text-align:right">
+      <div class="pill green" style="margin-bottom:6px">{{ a.category or 'other' }}</div>
+      <div class="score" style="font-size:18px">{{ '%.2f'|format(a.confidence or 0) }}</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>Résumé</h3>
+    <p style="line-height:1.6">{{ a.summary }}</p>
+
+    <h3>Extrait / Contenu</h3>
+    <pre style="white-space:pre-wrap; background:rgba(255,255,255,0.02); padding:12px; border-radius:8px; max-height:420px; overflow:auto">{{ a.content[:4000] }}</pre>
+
+    <p style="margin-top:12px"><a class="btn" href="{{ a.url }}" target="_blank" rel="noopener">Ouvrir la source</a>
+    <a class="btn ghost" href="{{ url_for('index') }}">Retour</a></p>
+  </div>
+{% endblock %}

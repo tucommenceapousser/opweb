@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>{% block title %}Veille Hacktiviste{% endblock %}</title>
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@300;400;700&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+
+  <style>
+    :root{
+      --bg:#0b0f14;
+      --panel:#0f1720;
+      --muted:#98a3b3;
+      --accent1:#00ffa3;
+      --accent2:#66d9ff;
+      --glow: 0 6px 24px rgba(0,255,163,0.06), 0 0 8px rgba(102,217,255,0.03);
+      --glass: rgba(255,255,255,0.02);
+      --danger:#ff6b6b;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family:Inter, "Roboto Mono", monospace;
+      background:linear-gradient(180deg, var(--bg) 0%, #071018 100%);
+      color:#e6eef6;
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+      padding:28px;
+    }
+    .wrap{
+      max-width:1100px;
+      margin:0 auto;
+    }
+    header.site{
+      display:flex;
+      gap:16px;
+      align-items:center;
+      margin-bottom:20px;
+    }
+    .brand{
+      display:flex;
+      gap:12px;
+      align-items:center;
+    }
+    .logo{
+      width:56px;height:56px;border-radius:10px;
+      background:linear-gradient(135deg,var(--accent2),var(--accent1));
+      box-shadow: var(--glow);
+      display:flex;align-items:center;justify-content:center;font-weight:700;color:#021017;
+      font-family: "Roboto Mono", monospace;
+    }
+    h1 { margin:0;font-size:20px;letter-spacing:0.6px }
+    .sub { color:var(--muted); font-size:13px }
+
+    nav.links{margin-left:auto; display:flex; gap:10px; align-items:center;}
+    .btn {
+      background:transparent;border:1px solid rgba(255,255,255,0.06);padding:8px 12px;border-radius:10px;
+      color:var(--accent2); text-decoration:none; font-weight:600; font-size:13px;
+      backdrop-filter: blur(4px);
+    }
+    .btn.ghost{ color:var(--muted); border-color:transparent }
+    .card{
+      background: linear-gradient(180deg, rgba(255,255,255,0.02), transparent);
+      border: 1px solid rgba(255,255,255,0.03);
+      border-radius:12px;padding:16px; box-shadow: var(--glow); margin-bottom:16px;
+    }
+
+    form.inline{display:flex; gap:8px; align-items:center; margin-top:12px}
+    input[type="text"], input[type="number"], input[type="date"]{
+      background:var(--glass); border:1px solid rgba(255,255,255,0.03); padding:8px 10px;border-radius:8px;color:inherit;
+      outline:none; min-width:200px;
+    }
+    table{width:100%;border-collapse:collapse;font-size:14px}
+    thead th{ text-align:left; font-size:12px; color:var(--muted); padding:10px 8px; text-transform:uppercase; letter-spacing:0.8px}
+    tbody tr{ border-top:1px solid rgba(255,255,255,0.02) }
+    tbody td{ padding:12px 8px; vertical-align:top}
+    .pill{ display:inline-block;padding:6px 8px;border-radius:999px;font-size:12px}
+    .pill.green{ background:rgba(0,255,163,0.08); color:var(--accent1); border:1px solid rgba(0,255,163,0.06) }
+    .pill.blue{ background:rgba(102,217,255,0.06); color:var(--accent2); border:1px solid rgba(102,217,255,0.04) }
+    .score{ font-weight:700; font-family:"Roboto Mono"; color:var(--accent1) }
+
+    footer{ margin-top:28px; color:var(--muted); font-size:13px; text-align:center }
+
+    /* small devices */
+    @media (max-width:800px){
+      .brand h1{font-size:16px}
+      .logo{width:46px;height:46px}
+      header.site{flex-direction:column;align-items:flex-start;gap:10px}
+      form.inline{flex-direction:column;align-items:stretch}
+      input[type="text"]{width:100%}
+    }
+  </style>
+
+  {% block head_extra %}{% endblock %}
+</head>
+<body>
+  <div class="wrap">
+    <header class="site">
+      <div class="brand">
+        <div class="logo">TH</div>
+        <div>
+          <h1>trhacknon Veille</h1>
+          <div class="sub">Monitoring public — mentions d'opérations &amp; hacktivisme</div>
+        </div>
+      </div>
+
+      <nav class="links">
+        <a class="btn" href="{{ url_for('index') }}">Accueil</a>
+        <a class="btn" href="{{ url_for('advanced_search_page') }}">Recherche avancée</a>
+        <a class="btn" href="#" onclick="document.getElementById('fetchForm')?.submit()">Lancer collecte</a>
+      </nav>
+    </header>
+
+    {% block content %}{% endblock %}
+
+    <footer>
+      <div>Respecte la loi — outil de veille publique. Résumés par GPT-4 (si activé).</div>
+    </footer>
+  </div>
+
+  {% block scripts %}{% endblock %}
+</body>
+</html>
